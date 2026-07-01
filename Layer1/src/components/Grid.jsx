@@ -9,14 +9,7 @@ import albums from '../data/albums.json';
 function Grid({onImageClick}){
     return(
         <>
-         <div style={{
-            display:"flex",
-            paddingTop:"5rem",
-            // alignItems: "center",
-            justifyContent:"center",
-            height:"50vh",
-            border: "2px solid violet",
-        }}>
+         <div className="grid grid-cols-6 px-[clamp(1rem,8%,15rem)]">
             <div style={{
                 display: "flex",
                 // flexDirection: "row",
@@ -52,20 +45,10 @@ function Grid({onImageClick}){
             // gap: "4px",
         }}>
             {albums.map((album) => (
-                <div key={album.id} style={{
-                    // border:"3px solid yellow",
-                    width: "100%",
-                    
-                    aspectRatio: "9 / 16",
-                    overflow: "hidden"
-                }}>
-                    <img src={new URL(`${album.coverImage}`, import.meta.url).href} alt={`grid-${album.id}`} onClick={() => onImageClick(album.id - 1)} style={{
-                        // border:"3px solid blue",
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        cursor: "pointer"
-                    }}/>
+                <div key={album.id} className="w-full aspect-[9/16] overflow-hidden">
+                    <img src={new URL(`${album.coverImage}`, import.meta.url).href} alt={`grid-${album.id}`} 
+                    onClick={() => onImageClick(album.id - 1)} 
+                    className="w-full h-full object-cover cursor-pointer transition-transform duration-300 hover:scale-110"/>
                 </div>
             ))}
         </div>  

@@ -27,32 +27,13 @@ function LeftImage({ albumIndex, onImageClick }){
 
     return(
         <>
-        <div style={{
-            height:"70vh",
-            width:"30vw",
-            position:"relative",
-            border:"3px solid white"
-        }}>
-        <img src={Images[currIdx]} onClick={() => onImageClick(Images[currIdx])} style={{
-            width:"100%",
-            height: "100%",
-            objectFit: "cover",
-            display:"block",
-            cursor:"zoom-in"
-        }}/>
-        <button onClick={goLeft} disabled={currIdx === 0} style={{
-            position:"absolute", left:"8px", top:"50%", transform:"translateY(-50%)",
-            background:"none", border:"none", color:"rgba(255,255,255,0.4)",
-            fontSize:"24px", cursor:"pointer"
-        }}>
+        <div className="h-[70vh] w-[30vw] relative">
+        <img src={Images[currIdx]} onClick={() => onImageClick(Images[currIdx])} className="w-full h-full object-cover block cursor-zoom-in"/>
+        <button onClick={goLeft} disabled={currIdx === 0} className="absolute left-2 top-1/2 -translate-y-1/2 bg-transparent border-none text-white/40 text-2xl cursor-pointer hover:text-white/80 transition-colors">
             <i className="fa-solid fa-arrow-left"></i>
         </button>
 
-        <button onClick={goRight} disabled={currIdx === Images.length - 1} style={{
-            position:"absolute", right:"8px", top:"50%", transform:"translateY(-50%)",
-            background:"none", border:"none", color:"rgba(255,255,255,0.4)",
-            fontSize:"24px", cursor:"pointer"
-        }}>
+        <button onClick={goRight} disabled={currIdx === Images.length - 1} className="absolute right-2 top-1/2 -translate-y-1/2 bg-transparent border-none text-white/40 text-2xl cursor-pointer hover:text-white/80 transition-colors">
             <i className="fa-solid fa-arrow-right"></i>
         </button>
         </div>

@@ -11,9 +11,17 @@ function App(){
         setShowLayout(true);
     }
     if(showLayout){
-        return <Layout album={selectedAlbum} onBack={() => setShowLayout(false)}/>
+        return (
+            <div className="fade-in">
+                <Layout album={selectedAlbum} onBack={() => setShowLayout(false)}/>
+            </div>
+        );
     }else{
-        return <Grid onImageClick= {handleImageClick} />
+        return (
+            <div className="fade-in">
+                <Grid onImageClick={handleImageClick}/>
+            </div>
+        );
     }
   
 }

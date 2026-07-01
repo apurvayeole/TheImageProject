@@ -2,7 +2,7 @@ function ProfileDes(){
     return(
         <>
         <div style={{
-            border:"2px solid black",
+            // border:"2px solid black",
             display:"block",
             // alignItems:"center",
             // justifyContent:"center"

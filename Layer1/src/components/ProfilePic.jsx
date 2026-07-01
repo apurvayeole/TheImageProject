@@ -4,22 +4,8 @@ function ProfilePic(){
 
     return(
         <>
-        <div style={{color:'red',
-             backgroundColor:"black",
-             height:"100px", 
-             width:"100px",
-             borderRadius:"50rem",
-             display:"flex",
-             justifyContent:"center",
-             alignItems:"center",
-             overflow: "hidden",
-             flexShrink:0
-             }}>
-            <img src={profilepic} style={{
-                width:"100%",
-                height: "100%",
-                objectFit: "cover"
-            }}/>
+        <div  className="bg-black h-[100px] w-[100px] rounded-full flex justify-center items-center overflow-hidden flex-shrink-0">
+            <img src={profilepic}  className="w-full h-full object-cover"/>
         </div>
         </>
     );
