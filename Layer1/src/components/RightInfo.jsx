@@ -1,4 +1,6 @@
-function RightInfo(){
+import albums from '../data/albums.json';
+
+function RightInfo({album}){
     return(
         <>
         <div style={{
@@ -13,8 +15,8 @@ function RightInfo(){
             gap: "12px",
             border:"3px solid red",
         }}>
-            <h3>Title:1</h3>
-            <p>Description of Image</p>
+            <h3>Title:1:{album.title}</h3>
+            <p>Description of Image:{album.description}</p>
             <p>Camera Information</p>
 
         </div>

@@ -1,15 +1,17 @@
 import FullscreenImage from "./FullscreenImage";
 import LeftImage from "./LeftImage";
 import RightInfo from "./RightInfo";
+import albums from '../data/albums.json';
 
 import { useState } from "react";
 
-function Layout({onBack,albumIndex}){
-    let [showAlbum, setShowAlbum] = useState(albumIndex);
+function Layout({onBack,album}){
+    
+    let [showAlbum, setShowAlbum] = useState(album.id - 1);
     const [fullscreenSrc, setFullscreenSrc] = useState(null);
-
+    const currentAlbum = albums[showAlbum];
     function handleNavigation(){
-        setShowAlbum(albumIndex);
+        setShowAlbum(album.id);
     }
 
     function preImage(){
@@ -55,7 +57,7 @@ function Layout({onBack,albumIndex}){
                 border:"3px solid blue",
             }}>
                 <LeftImage albumIndex={showAlbum} onImageClick={(src) => setFullscreenSrc(src)}/>
-                <RightInfo/>
+                <RightInfo album={currentAlbum}/>
             </div>
 
             {/* Right arrow button */}

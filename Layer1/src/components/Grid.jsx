@@ -1,18 +1,12 @@
-import post1 from '../assets/Album1/cover.png';
-import post2 from '../assets/Album2/cover.png';
-import post3 from '../assets/Album3/cover.png';
-import post4 from '../assets/Album4/cover.png';
-import post5 from '../assets/Album5/cover.png';
-import post6 from '../assets/Album6/cover.png';
+
 import ProfilePic from './ProfilePic';
 import ProfileDes from './ProfileDes';
 import NavLinks from './navLinks';
 
-const images = [
-    post1,post2,post3,post4,post5,post6
-];
+import albums from '../data/albums.json';
 
-function Grid({onImageClick,index}){
+
+function Grid({onImageClick}){
     return(
         <>
          <div style={{
@@ -57,15 +51,15 @@ function Grid({onImageClick,index}){
             gridTemplateColumns: "repeat(6, 1fr)",
             // gap: "4px",
         }}>
-            {images.map((img, index) => (
-                <div key={index} style={{
+            {albums.map((album) => (
+                <div key={album.id} style={{
                     // border:"3px solid yellow",
                     width: "100%",
                     
                     aspectRatio: "9 / 16",
                     overflow: "hidden"
                 }}>
-                    <img src={img} alt={`grid-${index}`} onClick={() => onImageClick(index)} style={{
+                    <img src={new URL(`${album.coverImage}`, import.meta.url).href} alt={`grid-${album.id}`} onClick={() => onImageClick(album.id - 1)} style={{
                         // border:"3px solid blue",
                         width: "100%",
                         height: "100%",
