@@ -28,7 +28,7 @@ function FullscreenImage({ src, onClose }){
         <div ref={divRef} onClick={exitFullscreen} style={{
             width: "100vw",
             height: "100vh",
-            backgroundColor: "black",
+            backgroundColor: "var(--parchment)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",

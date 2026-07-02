@@ -31,15 +31,17 @@ function Layout(){
     return(
         <>
         <div onClick={() => navigate('/')}
-        className="bg-[#121212] min-h-screen flex items-center justify-center relative px-16">
+        style={{ backgroundColor: "var(--linen)" }}
+        className="min-h-screen flex items-center justify-center relative px-16">
             {/* Left arrow button */}
-            <button onClick={(e) => { e.stopPropagation(); preImage(); }} 
-            className="absolute left-4 bg-transparent border-none text-white text-4xl cursor-pointer opacity-70 hover:opacity-100 transition-opacity">
+            <button onClick={(e) => { e.stopPropagation(); preImage(); }}
+            style={{ color: "var(--text-mid)" }}
+            className="absolute left-4 bg-transparent border-none text-4xl cursor-pointer opacity-70 hover:opacity-100 transition-opacity">
                 <i className="fa-solid fa-arrow-left"></i>
             </button>
 
             {/* Center block */}
-            <div onClick={(e) => e.stopPropagation()} className="flex flex-row shadow-2xl">
+            <div onClick={(e) => e.stopPropagation()} className="flex flex-row shadow-lg">
                 <LeftImage albumIndex={showAlbum} onImageClick={(src) => setFullscreenSrc(src)}/>
                 <RightInfo album={currentAlbum}/>
             </div>
@@ -50,7 +52,7 @@ function Layout(){
                 right: "16px",
                 background: "none",
                 border: "none",
-                color: "white",
+                color: "var(--text-mid)",
                 fontSize: "clamp(20px, 3vw, 36px)",
                 cursor: "pointer",
                 opacity: 0.7,

@@ -10,17 +10,15 @@ import { useNavigate } from 'react-router-dom';
 function Grid(){
     const navigate = useNavigate();
     return(
-        <>
+        <div style={{ backgroundColor: "var(--linen)", minHeight: "100vh" }}>
          <div className="grid grid-cols-6 px-[clamp(1rem,8%,15rem)]">
             <div style={{
                 display: "flex",
-                // flexDirection: "row",
                 justifyContent:"center",
                 alignItems: "center",
                 height:"20vh",
                 width:"80vw",
                 gap: "2.5rem",
-                // border:"2px solid lightblue"
             }}>
                 <ProfilePic style={{
                     position:"fix"
@@ -53,9 +51,9 @@ function Grid(){
                     className="w-full h-full object-cover cursor-pointer transition-transform duration-300 hover:scale-110"/>
                 </div>
             ))}
-        </div>  
+        </div>
 
-        </>
+        </div>
     );
 }
 

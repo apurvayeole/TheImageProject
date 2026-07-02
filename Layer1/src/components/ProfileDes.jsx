@@ -10,17 +10,20 @@ function ProfileDes(){
         <p style={{
             fontSize:"1rem",
             fontFamily:"cursive",
-            margin:0
+            margin:0,
+            color:"var(--text-dark)"
         }}>Through my lenses....</p>
         <p style={{
             fontSize:"1rem",
             fontFamily:"cursive",
-            margin:0
+            margin:0,
+            color:"var(--text-mid)"
         }}>Through my lenses</p>
         <p style={{
             fontSize:"1rem",
             fontFamily:"cursive",
-            margin:0
+            margin:0,
+            color:"var(--text-light)"
         }}>Through my lenses</p>
         </div>
         </>
