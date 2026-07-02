@@ -3,16 +3,21 @@ import LeftImage from "./LeftImage";
 import RightInfo from "./RightInfo";
 import albums from '../data/albums.json';
 
+import { useParams, useNavigate } from "react-router-dom";
+
 import { useState } from "react";
 
-function Layout({onBack,album}){
+function Layout(){
+
+    const{id} = useParams();
+    const navigate = useNavigate();
     
-    let [showAlbum, setShowAlbum] = useState(album.id - 1);
+    let [showAlbum, setShowAlbum] = useState(Number(id));
     const [fullscreenSrc, setFullscreenSrc] = useState(null);
     const currentAlbum = albums[showAlbum];
-    function handleNavigation(){
-        setShowAlbum(album.id);
-    }
+    // function handleNavigation(){
+    //     setShowAlbum(album.id);
+    // }
 
     function preImage(){
         if(showAlbum > 0 )
@@ -25,7 +30,7 @@ function Layout({onBack,album}){
     }
     return(
         <>
-        <div onClick={onBack} 
+        <div onClick={() => navigate('/')}
         className="bg-[#121212] min-h-screen flex items-center justify-center relative px-16">
             {/* Left arrow button */}
             <button onClick={(e) => { e.stopPropagation(); preImage(); }} 

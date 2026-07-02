@@ -4,9 +4,11 @@ import ProfileDes from './ProfileDes';
 import NavLinks from './navLinks';
 
 import albums from '../data/albums.json';
+import { useNavigate } from 'react-router-dom';
 
 
-function Grid({onImageClick}){
+function Grid(){
+    const navigate = useNavigate();
     return(
         <>
          <div className="grid grid-cols-6 px-[clamp(1rem,8%,15rem)]">
@@ -44,10 +46,10 @@ function Grid({onImageClick}){
             gridTemplateColumns: "repeat(6, 1fr)",
             // gap: "4px",
         }}>
-            {albums.map((album) => (
+            {albums.map((album,index) => (
                 <div key={album.id} className="w-full aspect-[9/16] overflow-hidden">
                     <img src={new URL(`${album.coverImage}`, import.meta.url).href} alt={`grid-${album.id}`} 
-                    onClick={() => onImageClick(album.id - 1)} 
+                    onClick={() =>  navigate(`/album/${index}`)} 
                     className="w-full h-full object-cover cursor-pointer transition-transform duration-300 hover:scale-110"/>
                 </div>
             ))}
