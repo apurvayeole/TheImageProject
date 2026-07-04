@@ -2,51 +2,46 @@
 import ProfilePic from './ProfilePic';
 import ProfileDes from './ProfileDes';
 import NavLinks from './navLinks';
-
-import albums from '../data/albums.json';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-
 function Grid(){
+    const [albums, setAlbums] = useState([])
+
+useEffect(() => {
+    fetch('http://localhost:3000/api/albums')
+        .then(res => res.json())
+        .then(data => setAlbums(data))
+}, [])
+
+
     const navigate = useNavigate();
     return(
         <div style={{ backgroundColor: "var(--linen)", minHeight: "100vh" }}>
-         <div className="grid grid-cols-6 px-[clamp(1rem,8%,15rem)]">
+         <div className="px-[clamp(1rem,8%,15rem)]">
             <div style={{
                 display: "flex",
                 justifyContent:"center",
                 alignItems: "center",
                 height:"20vh",
-                width:"80vw",
                 gap: "2.5rem",
             }}>
-                <ProfilePic style={{
-                    position:"fix"
-                }}/>
+                <ProfilePic/>
                 <div style={{
                     display:"flex",
                     flexDirection:"column",
                     gap:"10px",
-                    width:"300px",
-                    minheight:"120px",
-                    // border:"2px solid hotpink"
+                    maxWidth:"300px",
                 }}>
                     <ProfileDes/>
                     <NavLinks/>
                 </div>
             </div>
         </div>
-        <div style={{
-            // border:"3px solid green",
-            display: "grid",
-            paddingLeft:"clamp(1rem, 8%, 15rem)",
-            paddingRight:"clamp(1rem, 8%, 15rem)",
-            gridTemplateColumns: "repeat(6, 1fr)",
-            // gap: "4px",
-        }}>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 px-[clamp(1rem,8%,15rem)]">
             {albums.map((album,index) => (
                 <div key={album.id} className="w-full aspect-[9/16] overflow-hidden">
-                    <img src={new URL(`${album.coverImage}`, import.meta.url).href} alt={`grid-${album.id}`} 
+                    <img src={`http://localhost:3000${album.coverImage}`} 
                     onClick={() =>  navigate(`/album/${index}`)} 
                     className="w-full h-full object-cover cursor-pointer transition-transform duration-300 hover:scale-110"/>
                 </div>

@@ -1,9 +1,15 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Grid from "./components/Grid.jsx";
 import Layout from "./components/Layout.jsx";
-import albums from './data/albums.json';
 import { Routes, Route } from "react-router-dom";
 function App(){
+    const [albums, setAlbums] = useState([])
+
+useEffect(() => {
+    fetch('http://localhost:3000/api/albums')
+        .then(res => res.json())
+        .then(data => setAlbums(data))
+}, [])
     // const[showLayout, setShowLayout] = useState(false);
     // const[selectedAlbum, setselectedAlbum] = useState(albums[0]);
     // function handleImageClick(index){
