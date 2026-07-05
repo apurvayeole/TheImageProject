@@ -4,10 +4,10 @@ function LeftImage({ images, onImageClick }){
     const [currIdx, setCurrIdx] = useState(0);
     const [isLoaded, setIsLoaded] = useState(false);
 
-    useEffect(() => {
-        setCurrIdx(0);
-        setIsLoaded(false);
-    }, [images]);
+    // useEffect(() => {
+    //     setCurrIdx(0);
+    //     setIsLoaded(false);
+    // }, [images]);
 
     useEffect(() => {
         function handleKeyDown(e) {
