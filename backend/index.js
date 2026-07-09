@@ -46,14 +46,13 @@ function authorizeUser(req, res, next){
     next();
 }
 
-app.post("/signup", async(req,res)=>{
+app.post("/signup", async(req,res,next)=>{
     try{
       const newUser = new User({
       username: req.body.username,
       email: req.body.email,
       password: req.body.password,
     });
-
     await newUser.save();
 
     const token = jwt.sign(
@@ -62,15 +61,38 @@ app.post("/signup", async(req,res)=>{
       { expiresIn: "1h" }
     );
     console.log("token : ",token);
-
     res.json({ message: "User created successfully!" });
 
     }catch{
-        res.status(404).json({message:"User not store in db"});
+        res.status(404).send("User not store in db");
     }
     console.log("token : ",token);
     console.log(req.body);
     res.json({message : "data received"});
+
+    next();
+})
+
+app.post('/login', async (req,res)=>{
+    const user = await User.findOne({email : req.body.email});
+
+    if(!user){
+        return res.status(404).json({message:"User is not define"});
+    }
+    if(user.password === req.body.password){
+        const token = jwt.sign(
+      { userId: user._id },
+      "your-secret-key",
+      { expiresIn: "1h" }
+    );
+    console.log("token : ",token);
+    console.log("Login done");
+    return res.send("Login succesful, token generated");
+    }else{
+        return res.status(404).send("Wrong Password");
+    }
+    
+    
 })
 app.listen(3000, () => {
     console.log(`Server running on http://localhost:3000`);

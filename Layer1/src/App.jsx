@@ -2,6 +2,7 @@ import { useState,useEffect } from "react";
 import Grid from "./components/Grid.jsx";
 import Layout from "./components/Layout.jsx";
 import SignUp from "./components/SignUp.jsx";
+import LogIN from "./components/LogIn.jsx";
 import { Routes, Route } from "react-router-dom";
 function App(){
     const [albums, setAlbums] = useState([])
@@ -33,9 +34,11 @@ function App(){
   
       return (
         <Routes>
-            <Route path="/" element={<Grid/>}/>
+            <Route path="/home" element={<Grid/>}/>
             <Route path="/album/:id" element={<Layout albums={albums}/>}/>
             <Route path="/signup" element={<SignUp/>}></Route>
+            <Route path="/login" element={<LogIN/>}></Route>
+
         </Routes>
     );
 }
