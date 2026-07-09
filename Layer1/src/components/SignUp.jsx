@@ -1,6 +1,8 @@
 import react from 'react';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 function SignUp(){
+    const navigate = useNavigate();
     const[formData, setFromData] = useState(() => {
         try{
         const saved = localStorage.getItem("formData");
@@ -37,6 +39,7 @@ function SignUp(){
         })
         const data = await response.json();
         console.log("server responded frontend", data);
+        navigate("/login");
 
     }
    

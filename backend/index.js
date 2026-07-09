@@ -38,12 +38,27 @@ app.get('/api/albums/:index', (req, res) => {
     })
 })
 
-function authorizeUser(req, res, next){
-    const auth = req.headers['authorization'];
-    if(!auth){
-        return res.status(404).send({message:"Not authorize user"});
+function veriyToken(req,res,next){
+    try{
+    const authHeader = req.headers['authentication'];
+
+    if(!authHeader){
+        return res.status(401).json({message:"Token not provided"});
     }
-    next();
+
+    const token = authHeader.split("")[1];
+
+    const validToken = jwt.verify(token,"your-secret-key");
+    if(validToken.userId = req.userId){
+        console.log("valid user");
+        next();
+        return res.status(200).json({message:"valid user"});
+    }else{
+        return res.status(401).json({message:"wrong token"});
+    }
+    }catch(error){
+        console.error("error occured", error.message);
+    }
 }
 
 app.post("/signup", async(req,res,next)=>{
@@ -73,7 +88,7 @@ app.post("/signup", async(req,res,next)=>{
     next();
 })
 
-app.post('/login', async (req,res)=>{
+app.post('/login', async (req,res,next)=>{
     const user = await User.findOne({email : req.body.email});
 
     if(!user){
@@ -87,12 +102,14 @@ app.post('/login', async (req,res)=>{
     );
     console.log("token : ",token);
     console.log("Login done");
-    return res.send("Login succesful, token generated");
+    return res.json({token: token});
     }else{
-        return res.status(404).send("Wrong Password");
-    }
-    
-    
+        return res.status(404).json({message:"Wrong Password"});
+    } 
+})
+
+app.post('/home' ,veriyToken, (req,res) =>{
+    console.log("Welcome home");
 })
 app.listen(3000, () => {
     console.log(`Server running on http://localhost:3000`);

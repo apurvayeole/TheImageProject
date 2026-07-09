@@ -1,6 +1,8 @@
 import react from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 function LogIN(){
+    const navigate = useNavigate();
     const [formData, setFormData] = useState(() =>({
         email: '',
         password : '',
@@ -17,6 +19,7 @@ function LogIN(){
 
     async function onSubmit(e){
         e.preventDefault();
+        try{
         const response = await fetch("http://localhost:3000/login" ,{
         method : "post",
         headers:{
@@ -24,7 +27,21 @@ function LogIN(){
         },
         body : JSON.stringify(formData)
     })
-    console.log(response.json());
+
+    const data = await response.json();
+    console.log(data);
+    if(!response.ok){
+        console.log("Error occured", data.message);
+        return;
+    }
+
+    localStorage.setItem("token", data.token);
+    console.log("LOgin succesfull");
+    navigate("/home");
+}catch(error){
+    console.error("Something went wrong : ", error.message);
+}
+    
     }
 
 
