@@ -1,17 +1,12 @@
-const db = require('./database.js');
+const mongoose = require('mongoose');
+const Album = require('./public/album.js');
 const albums = require('./albums.json');
 
-const insert = db.prepare(`
-    INSERT INTO albums (id, title, location, year, description, coverImage, images, camera)
-    VALUES (@id, @title, @location, @year, @description, @coverImage, @images, @camera)
-`)
-
-for(const album of albums){
-    insert.run({
-        ...album,
-        images: JSON.stringify(album.images),
-        camera: JSON.stringify(album.camera)
-    })
-}
-
-console.log("Database seeded");
+mongoose.connect("mongodb://127.0.0.1:27017/THEPROJECT")
+  .then(async () => {
+    await Album.deleteMany({});
+    await Album.insertMany(albums);
+    console.log("Database seeded");
+    await mongoose.connection.close();
+  })
+  .catch((err) => console.log("MongoDB connection error:", err));

@@ -1,41 +1,30 @@
 const express = require('express');
 const cors = require('cors');
-const db = require('./database');
 const jwt = require("jsonwebtoken");
 const app = express();
 const User = require('./public/user');
+const Album = require('./public/album');
 const mongoose = require('mongoose');
 app.use(cors());
 app.use(express.static('public'));
 app.use(express.json());
-app.get('/api/albums', (req,res) => {
-    const rows = db.prepare('SELECT * FROM albums').all()
-    const albums = rows.map(row => ({
-        ...row,
-        images: JSON.parse(row.images),
-        camera: JSON.parse(row.camera)
-    }))
-    res.json(albums)
-})
 
 mongoose.connect("mongodb://127.0.0.1:27017/THEPROJECT")
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.log("MongoDB connection error:", err));
 
+app.get('/api/albums', async (req, res) => {
+    const albums = await Album.find({});
+    res.json(albums)
+})
 
-
-app.get('/api/albums/:index', (req, res) => {
-    const rows = db.prepare('Select * FROM albums').all()
+app.get('/api/albums/:index', async (req, res) => {
+    const albums = await Album.find({});
     const index = parseInt(req.params.index)
-    if(index < 0 || index>= rows.length){
+    if(index < 0 || index>= albums.length){
         return res.status(404).json({error:'ALbum not found'})
     }
-    const row = rows[index]
-    res.json({
-        ...rows,
-        images: JSON.parse(row.images),
-        camera: JSON.parse(row.camera)
-    })
+    res.json(albums[index])
 })
 
 function veriyToken(req,res,next){
