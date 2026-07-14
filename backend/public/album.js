@@ -10,7 +10,6 @@ const cameraSchema = new mongoose.Schema({
 }, { _id: false });
 
 const albumSchema = new mongoose.Schema({
-  id: { type: Number, required: true },
   title: String,
   location: String,
   year: String,

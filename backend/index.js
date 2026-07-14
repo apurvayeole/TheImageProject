@@ -5,6 +5,8 @@ const app = express();
 const User = require('./public/user');
 const Album = require('./public/album');
 const mongoose = require('mongoose');
+const multerUpload = require('./multerConfig');
+const path = require('path');
 app.use(cors());
 app.use(express.static('public'));
 app.use(express.json());
@@ -100,6 +102,37 @@ app.post('/login', async (req,res,next)=>{
 app.post('/home' ,veriyToken, (req,res) =>{
     console.log("Welcome home");
 })
+
+app.post('/upload-album', multerUpload.fields([
+    {name:"coverImage",maxCount:1},
+    {name:"images",maxCount:10},
+]), async (req, res) => {
+    try{
+        const newAlbum = new Album({
+            title:req.body.albumTitle,
+            description:req.body.description,
+            location:req.body.location,
+            year:req.body.year,
+            camera:{
+                body:req.body.cameraBody,
+                lens:req.body.lens,
+                focalLength:req.body.focalLength,
+                aperture:req.body.aperture,
+                shutterSpeed:req.body.shutterSpeed,
+                iso:req.body.iso,
+            },
+            coverImage: req.files.coverImage[0].path,
+            images: req.files.images.map((image) => image.path),
+        });
+        await newAlbum.save();
+        console.log("req.files.images:", req.files.images);
+        res.json({ message: "Album uploaded successfully!", album: newAlbum });
+    } catch (error) {
+      res.status(500).json({ message: "Error saving album", error: error.message });
+   
+    }
+}
+)
 app.listen(3000, () => {
     console.log(`Server running on http://localhost:3000`);
 })
