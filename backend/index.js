@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const jwt = require("jsonwebtoken");
@@ -7,11 +8,12 @@ const Album = require('./public/album');
 const mongoose = require('mongoose');
 const multerUpload = require('./multerConfig');
 const path = require('path');
+require('dotenv').config() 
 app.use(cors());
 app.use(express.static('public'));
 app.use(express.json());
 
-mongoose.connect("mongodb://127.0.0.1:27017/THEPROJECT")
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.log("MongoDB connection error:", err));
 
@@ -39,7 +41,7 @@ function veriyToken(req,res,next){
 
     const token = authHeader.split("")[1];
 
-    const validToken = jwt.verify(token,"your-secret-key");
+    const validToken = jwt.verify(token,process.env.JWT_SECRET);
     if(validToken.userId = req.userId){
         console.log("valid user");
         next();
@@ -88,7 +90,7 @@ app.post('/login', async (req,res,next)=>{
     if(user.password === req.body.password){
         const token = jwt.sign(
       { userId: user._id },
-      "your-secret-key",
+      process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
     console.log("token : ",token);
@@ -133,6 +135,6 @@ app.post('/upload-album', multerUpload.fields([
     }
 }
 )
-app.listen(3000, () => {
-    console.log(`Server running on http://localhost:3000`);
+app.listen(process.env.PORT, () => {
+    console.log(`Server running on http://localhost:${process.env.PORT}`);
 })

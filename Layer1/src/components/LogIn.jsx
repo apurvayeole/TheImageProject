@@ -20,7 +20,7 @@ function LogIN(){
     async function onSubmit(e){
         e.preventDefault();
         try{
-        const response = await fetch("http://localhost:3000/login" ,{
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/login` ,{
         method : "post",
         headers:{
             "Content-Type":"application/json",

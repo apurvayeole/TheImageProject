@@ -11,7 +11,7 @@ function Layout(){
     const [albums, setAlbums] = useState([])
 
 useEffect(() => {
-    fetch('http://localhost:3000/api/albums')
+    fetch(`${import.meta.env.VITE_API_URL}/api/albums`)
         .then(res => res.json())
         .then(data => setAlbums(data))
 }, [])

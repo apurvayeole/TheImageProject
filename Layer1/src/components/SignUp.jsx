@@ -30,7 +30,7 @@ function SignUp(){
 
     async function onSubmit(e){
         e.preventDefault();
-        const response = await fetch("http://localhost:3000/signup",{
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/signup`,{
             method : "post",
             headers:{
                 "Content-Type" : "application/json",
