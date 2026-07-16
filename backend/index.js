@@ -100,7 +100,10 @@ app.post('/login', async (req,res,next)=>{
     if(!user){
         return res.status(404).json({message:"User is not define"});
     }
-    if(user.password === req.body.password){
+    const typePass = req.body.password;
+    const storedPass = user.password;
+    const isMatch = await bcrypt.compare(typePass, storedPass);
+    if(isMatch){
         const token = jwt.sign(
       { userId: user._id },
       process.env.JWT_SECRET,
