@@ -8,6 +8,7 @@ const Album = require('./public/album');
 const mongoose = require('mongoose');
 const multerUpload = require('./multerConfig');
 const path = require('path');
+const bcrypt = require('bcrypt');
 require('dotenv').config() 
 app.use(cors());
 app.use(express.static('public'));
@@ -56,27 +57,39 @@ function veriyToken(req,res,next){
 
 app.post("/signup", async(req,res,next)=>{
     try{
+      
+    if(!req.body.username || !req.body.email || !req.body.password){
+        return res.status(404).json({message:"Enter all fields"})
+    }
+
+    const existingEmail = await User.findOne({email : req.body.email});
+        if(existingEmail){
+            return res.status(404).json({message:"Email already register"});
+        
+    }
+    const plainPass = req.body.password;
+      const hashPass = await bcrypt.hash(plainPass, 10);   
       const newUser = new User({
       username: req.body.username,
       email: req.body.email,
-      password: req.body.password,
+      password: hashPass,
     });
     await newUser.save();
-
     const token = jwt.sign(
       { userId: newUser._id },
-      "your-secret-key",
+      process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
     console.log("token : ",token);
-    res.json({ message: "User created successfully!" });
+    return res.json({ message: "User created successfully!" });
 
-    }catch{
-        res.status(404).send("User not store in db");
+    }catch(err){
+        console.error("Signup error:", err); // ← log it so you can debug
+        return res.status(500).json({ message: "User could not be saved" });
     }
-    console.log("token : ",token);
-    console.log(req.body);
-    res.json({message : "data received"});
+    // console.log("token : ",token);
+    // console.log(req.body);
+    // res.json({message : "data received"});
 
     next();
 })

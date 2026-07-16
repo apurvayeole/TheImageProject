@@ -40,7 +40,7 @@ useEffect(() => {
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 px-[clamp(1rem,8%,15rem)]">
             {albums.map((album,index) => (
-                <div key={album.id} className="w-full aspect-[9/16] overflow-hidden">
+                <div key={album._id} className="w-full aspect-[9/16] overflow-hidden">
                     <img src={`${import.meta.env.VITE_API_URL}${album.coverImage}`}
                     onClick={() =>  navigate(`/album/${index}`)} 
                     className="w-full h-full object-cover cursor-pointer transition-transform duration-300 hover:scale-110"/>

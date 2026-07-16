@@ -38,8 +38,14 @@ function SignUp(){
             body : JSON.stringify(formData),
         })
         const data = await response.json();
-        console.log("server responded frontend", data);
-        navigate("/login");
+        if(response.ok){
+            console.log("server responded frontend", data);
+            navigate("/login");
+         }
+        else{
+            console.log(data);
+        }
+        
 
     }
    
